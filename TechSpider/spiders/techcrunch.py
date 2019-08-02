@@ -24,8 +24,6 @@ class TechcrunchSpider(scrapy.Spider):
             yield Request(url=parse.urljoin(response.url, article_info["guid"]["rendered"]),
                           meta={}, callback=self.parse_detail)
 
-        pass
-
     @staticmethod
     def parse_detail(response):
         item_loader = ArticleItemLoader(item=TechCrunchArticleItem(), response=response)

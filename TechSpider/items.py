@@ -26,6 +26,7 @@ class TechCrunchArticleItem(scrapy.Item):
     url = scrapy.Field()
     article_id = scrapy.Field()
     image_url = scrapy.Field(
+        # override the default processer, need full string here
         output_processor=MapCompose(lambda url: url)
     )
     image_path = scrapy.Field()
