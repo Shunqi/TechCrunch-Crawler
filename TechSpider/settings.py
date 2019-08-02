@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 
 # Scrapy settings for TechSpider project
 #
@@ -64,9 +65,18 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'TechSpider.pipelines.TechspiderPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'TechSpider.pipelines.TechspiderPipeline': 300,
+    # 'scrapy.pipelines.images.ImagesPipeline': 1,
+    'TechSpider.pipelines.ArticleImagePipeline': 1,
+}
+
+IMAGES_URLS_FIELD = "image_url"
+project_dir = os.path.abspath(os.path.dirname(__file__))
+IMAGES_STORE = os.path.join(project_dir, 'images')
+
+IMAGES_MIN_HEIGHT = 100
+IMAGES_MIN_WIDTH = 100
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
