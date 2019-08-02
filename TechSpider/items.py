@@ -7,7 +7,7 @@
 
 import scrapy
 from scrapy.loader import ItemLoader
-from scrapy.loader.processors import TakeFirst
+from scrapy.loader.processors import TakeFirst, MapCompose, Join
 
 
 class TechspiderItem(scrapy.Item):
@@ -15,15 +15,22 @@ class TechspiderItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
+
 class ArticleItemLoader(ItemLoader):
     default_output_processor = TakeFirst()
+
 
 class TechCrunchArticleItem(scrapy.Item):
     title = scrapy.Field()
     create_date = scrapy.Field()
     url = scrapy.Field()
-    url_object_id = scrapy.Field()
-    front_image_url = scrapy.Field()
-    front_image_path = scrapy.Field()
+    article_id = scrapy.Field()
+    image_url = scrapy.Field(
+        output_processor=MapCompose(lambda url: url)
+    )
+    image_path = scrapy.Field()
     tags = scrapy.Field()
-    content = scrapy.Field()
+    content = scrapy.Field(
+        output_processor=Join(",")
+    )
+    author = scrapy.Field()
