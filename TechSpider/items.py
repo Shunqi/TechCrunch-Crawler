@@ -46,3 +46,14 @@ class TechCrunchArticleItem(scrapy.Item):
         output_processor=Join(",")
     )
     author = scrapy.Field()
+
+    def get_insert_sql(self):
+        insert_sql = """
+            insert into TechCrunch(title, create_date, url, article_id, image_url, image_path, tags, content, author)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
+
+        params = (self["title"], self["create_date"], self["url"],  self["article_id"],
+                  self["image_url"], self["image_path"], self["tags"],
+                  self["content"], self["author"])
+        return insert_sql, params
